@@ -52,3 +52,21 @@ class Maze():
         self._draw_cell(0, 0)
         self._cells[self.num_cols - 1][self.num_rows - 1].has_bottom_wall = False
         self._draw_cell(self.num_cols - 1, self.num_rows - 1)
+
+    def _break_walls_r(self, i, j):
+        self._cells[i][j].visited = True
+        while True:
+            to_visit = []
+            if i + 1 < len(self._cells) and self._cells[i + 1][j].visited == False:
+                to_visit.append([i + 1, j])
+            if i - 1 < len(self._cells) and self._cells[i - 1][j].visited == False:
+                to_visit.append([i - 1, j])
+            if j + 1 < len(self._cells) and self._cells[i][j + 1].visited == False:
+                to_visit.append([i, j + 1])
+            if j - 1 < len(self._cells) and self._cells[i][j - 1].visited == False:
+                to_visit.append([i, j - 1])
+            if not to_visit:
+                self._draw_cell(i, j)
+                return
+            # add pick random direction and knocking down the walls
+            
